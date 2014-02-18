@@ -147,7 +147,7 @@ $result = $object->_parse_args({from_address => 'example@example.com'});
 cmp_deeply($result, {to_address => undef, sent_time => undef, recieved_time => undef, relay  => undef, from_address => 'example@example.com', message_id => undef, from_start => bool(0), subject => undef}, 'Mail::Log::Exceptions _parse_args test 2.');
 $object = Mail::Log::Trace->new({'log_file' => 't/data/log'});
 $result = $object->_parse_args({to_address => [qw(example@example.com example2@example.com)]});
-cmp_deeply($result, {to_address => [qw(example@example.com example2@example.com)], sent_time => undef, recieved_time => undef, relay => undef, from_address => undef, message_id => undef, from_start => bool(0), subject => undef}, 'Mail::Log::Exceptions _parse_args test 3.');
+cmp_deeply($result, {to_address => bag(qw(example@example.com example2@example.com)), sent_time => undef, recieved_time => undef, relay => undef, from_address => undef, message_id => undef, from_start => bool(0), subject => undef}, 'Mail::Log::Exceptions _parse_args test 3.');
 
 }
 
@@ -183,7 +183,7 @@ is($object->_get_parser_class(), 'Mail::Log::Parse::Test', 'Mail::Log::Trace par
 POSTFIX: {
 my $object = Mail::Log::Trace::Postfix->new({'log_file' => 't/data/log'});
 
-# A quick re-test of the above... 
+# A quick re-test of the above...
 is($object->get_log(), 't/data/log', 'Mail::Log::Trace::Postfix inital log');
 
 # Test overloads.
